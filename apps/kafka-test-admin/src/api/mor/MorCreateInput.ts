@@ -3,4 +3,5 @@ import { UserCreateNestedManyWithoutMorsInput } from "./UserCreateNestedManyWith
 export type MorCreateInput = {
   users?: UserCreateNestedManyWithoutMorsInput;
   name?: string | null;
+  test?: string | null;
 };
