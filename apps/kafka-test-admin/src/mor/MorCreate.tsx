@@ -24,6 +24,7 @@ export const MorCreate = (props: CreateProps): React.ReactElement => {
           <SelectArrayInput optionText={UserTitle} />
         </ReferenceArrayInput>
         <TextInput label="Name" source="name" />
+        <TextInput label="test" source="test" />
       </SimpleForm>
     </Create>
   );
