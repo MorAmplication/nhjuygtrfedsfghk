@@ -24,6 +24,7 @@ export const MorEdit = (props: EditProps): React.ReactElement => {
           <SelectArrayInput optionText={UserTitle} />
         </ReferenceArrayInput>
         <TextInput label="Name" source="name" />
+        <TextInput label="test" source="test" />
       </SimpleForm>
     </Edit>
   );
