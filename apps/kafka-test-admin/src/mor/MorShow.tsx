@@ -21,6 +21,7 @@ export const MorShow = (props: ShowProps): React.ReactElement => {
         <DateField source="createdAt" label="Created At" />
         <DateField source="updatedAt" label="Updated At" />
         <TextField label="Name" source="name" />
+        <TextField label="test" source="test" />
         <ReferenceManyField reference="User" target="morId" label="Users">
           <Datagrid rowClick="show">
             <TextField label="ID" source="id" />
