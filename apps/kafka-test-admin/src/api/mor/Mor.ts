@@ -6,4 +6,5 @@ export type Mor = {
   updatedAt: Date;
   users?: Array<User>;
   name: string | null;
+  test: string | null;
 };
