@@ -5,4 +5,5 @@ export type MorOrderByInput = {
   createdAt?: SortOrder;
   updatedAt?: SortOrder;
   name?: SortOrder;
+  test?: SortOrder;
 };
