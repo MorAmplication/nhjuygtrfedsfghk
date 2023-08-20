@@ -16,6 +16,7 @@ export const MorList = (props: ListProps): React.ReactElement => {
         <DateField source="createdAt" label="Created At" />
         <DateField source="updatedAt" label="Updated At" />
         <TextField label="Name" source="name" />
+        <TextField label="test" source="test" />
       </Datagrid>
     </List>
   );
