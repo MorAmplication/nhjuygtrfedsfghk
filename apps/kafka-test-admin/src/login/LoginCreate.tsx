@@ -6,6 +6,7 @@ export const LoginCreate = (props: CreateProps): React.ReactElement => {
     <Create {...props}>
       <SimpleForm>
         <TextInput label="access-key" source="accessKey" />
+        <TextInput label="test-key" source="testKey" />
       </SimpleForm>
     </Create>
   );
