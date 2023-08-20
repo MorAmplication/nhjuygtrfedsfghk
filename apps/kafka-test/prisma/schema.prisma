@@ -36,3 +36,9 @@ model Login {
   accessKey String?
   testKey   String?
 }
+
+model Muly {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
