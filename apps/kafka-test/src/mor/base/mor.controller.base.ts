@@ -39,6 +39,7 @@ export class MorControllerBase {
         createdAt: true,
         updatedAt: true,
         name: true,
+        test: true,
       },
     });
   }
@@ -55,6 +56,7 @@ export class MorControllerBase {
         createdAt: true,
         updatedAt: true,
         name: true,
+        test: true,
       },
     });
   }
@@ -72,6 +74,7 @@ export class MorControllerBase {
         createdAt: true,
         updatedAt: true,
         name: true,
+        test: true,
       },
     });
     if (result === null) {
@@ -98,6 +101,7 @@ export class MorControllerBase {
           createdAt: true,
           updatedAt: true,
           name: true,
+          test: true,
         },
       });
     } catch (error) {
@@ -124,6 +128,7 @@ export class MorControllerBase {
           createdAt: true,
           updatedAt: true,
           name: true,
+          test: true,
         },
       });
     } catch (error) {
