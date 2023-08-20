@@ -6,4 +6,5 @@ export type MorWhereInput = {
   id?: StringFilter;
   users?: UserListRelationFilter;
   name?: StringNullableFilter;
+  test?: StringNullableFilter;
 };

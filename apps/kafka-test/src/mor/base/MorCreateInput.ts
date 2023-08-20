@@ -39,6 +39,17 @@ class MorCreateInput {
     nullable: true,
   })
   name?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  test?: string | null;
 }
 
 export { MorCreateInput as MorCreateInput };

@@ -26,6 +26,7 @@ model Mor {
   updatedAt DateTime @updatedAt
   users     User[]
   name      String?
+  test      String?
 }
 
 model Login {
