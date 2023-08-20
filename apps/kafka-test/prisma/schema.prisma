@@ -34,4 +34,5 @@ model Login {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   accessKey String?
+  testKey   String?
 }
