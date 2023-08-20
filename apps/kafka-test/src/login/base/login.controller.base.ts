@@ -36,6 +36,7 @@ export class LoginControllerBase {
         createdAt: true,
         updatedAt: true,
         accessKey: true,
+        testKey: true,
       },
     });
   }
@@ -52,6 +53,7 @@ export class LoginControllerBase {
         createdAt: true,
         updatedAt: true,
         accessKey: true,
+        testKey: true,
       },
     });
   }
@@ -69,6 +71,7 @@ export class LoginControllerBase {
         createdAt: true,
         updatedAt: true,
         accessKey: true,
+        testKey: true,
       },
     });
     if (result === null) {
@@ -95,6 +98,7 @@ export class LoginControllerBase {
           createdAt: true,
           updatedAt: true,
           accessKey: true,
+          testKey: true,
         },
       });
     } catch (error) {
@@ -121,6 +125,7 @@ export class LoginControllerBase {
           createdAt: true,
           updatedAt: true,
           accessKey: true,
+          testKey: true,
         },
       });
     } catch (error) {

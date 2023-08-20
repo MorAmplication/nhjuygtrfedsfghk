@@ -6,6 +6,7 @@ export const LoginEdit = (props: EditProps): React.ReactElement => {
     <Edit {...props}>
       <SimpleForm>
         <TextInput label="access-key" source="accessKey" />
+        <TextInput label="test-key" source="testKey" />
       </SimpleForm>
     </Edit>
   );

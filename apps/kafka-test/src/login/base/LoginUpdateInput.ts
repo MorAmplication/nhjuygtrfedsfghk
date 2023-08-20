@@ -25,6 +25,17 @@ class LoginUpdateInput {
     nullable: true,
   })
   accessKey?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  testKey?: string | null;
 }
 
 export { LoginUpdateInput as LoginUpdateInput };

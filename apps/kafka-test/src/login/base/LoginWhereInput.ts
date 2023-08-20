@@ -39,6 +39,17 @@ class LoginWhereInput {
     nullable: true,
   })
   accessKey?: StringNullableFilter;
+
+  @ApiProperty({
+    required: false,
+    type: StringNullableFilter,
+  })
+  @Type(() => StringNullableFilter)
+  @IsOptional()
+  @Field(() => StringNullableFilter, {
+    nullable: true,
+  })
+  testKey?: StringNullableFilter;
 }
 
 export { LoginWhereInput as LoginWhereInput };
