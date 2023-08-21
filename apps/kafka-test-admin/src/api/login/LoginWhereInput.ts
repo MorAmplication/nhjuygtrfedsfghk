@@ -5,4 +5,5 @@ export type LoginWhereInput = {
   id?: StringFilter;
   accessKey?: StringNullableFilter;
   testKey?: StringNullableFilter;
+  test?: StringNullableFilter;
 };
