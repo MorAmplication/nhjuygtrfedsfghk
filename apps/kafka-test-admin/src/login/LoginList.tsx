@@ -17,6 +17,9 @@ export const LoginList = (props: ListProps): React.ReactElement => {
         <DateField source="updatedAt" label="Updated At" />
         <TextField label="access-key" source="accessKey" />
         <TextField label="test-key" source="testKey" />
+        <TextField label="_test_" source="test" />
+        <TextField label="Username" source="username" />
+        <TextField label="Roles" source="roles" />
       </Datagrid>
     </List>
   );

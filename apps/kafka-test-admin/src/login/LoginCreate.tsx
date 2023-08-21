@@ -1,5 +1,15 @@
 import * as React from "react";
-import { Create, SimpleForm, CreateProps, TextInput } from "react-admin";
+
+import {
+  Create,
+  SimpleForm,
+  CreateProps,
+  TextInput,
+  PasswordInput,
+  SelectArrayInput,
+} from "react-admin";
+
+import { ROLES_OPTIONS } from "../user/RolesOptions";
 
 export const LoginCreate = (props: CreateProps): React.ReactElement => {
   return (
@@ -7,6 +17,15 @@ export const LoginCreate = (props: CreateProps): React.ReactElement => {
       <SimpleForm>
         <TextInput label="access-key" source="accessKey" />
         <TextInput label="test-key" source="testKey" />
+        <TextInput label="_test_" source="test" />
+        <TextInput label="Username" source="username" />
+        <PasswordInput label="Password" source="password" />
+        <SelectArrayInput
+          source="roles"
+          choices={ROLES_OPTIONS}
+          optionText="label"
+          optionValue="value"
+        />
       </SimpleForm>
     </Create>
   );
