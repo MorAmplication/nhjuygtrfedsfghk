@@ -14,8 +14,8 @@ import { ApiProperty } from "@nestjs/swagger";
 import { StringFilter } from "../../util/StringFilter";
 import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
-import { UserListRelationFilter } from "../../user/base/UserListRelationFilter";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
+import { UserListRelationFilter } from "../../user/base/UserListRelationFilter";
 
 @InputType()
 class MorWhereInput {
@@ -29,18 +29,6 @@ class MorWhereInput {
     nullable: true,
   })
   id?: StringFilter;
-
-  @ApiProperty({
-    required: false,
-    type: () => UserListRelationFilter,
-  })
-  @ValidateNested()
-  @Type(() => UserListRelationFilter)
-  @IsOptional()
-  @Field(() => UserListRelationFilter, {
-    nullable: true,
-  })
-  users?: UserListRelationFilter;
 
   @ApiProperty({
     required: false,
@@ -63,6 +51,18 @@ class MorWhereInput {
     nullable: true,
   })
   test?: StringNullableFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => UserListRelationFilter,
+  })
+  @ValidateNested()
+  @Type(() => UserListRelationFilter)
+  @IsOptional()
+  @Field(() => UserListRelationFilter, {
+    nullable: true,
+  })
+  users?: UserListRelationFilter;
 }
 
 export { MorWhereInput as MorWhereInput };

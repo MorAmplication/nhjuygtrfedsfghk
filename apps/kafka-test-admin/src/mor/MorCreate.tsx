@@ -4,9 +4,9 @@ import {
   Create,
   SimpleForm,
   CreateProps,
+  TextInput,
   ReferenceArrayInput,
   SelectArrayInput,
-  TextInput,
 } from "react-admin";
 
 import { UserTitle } from "../user/UserTitle";
@@ -15,6 +15,8 @@ export const MorCreate = (props: CreateProps): React.ReactElement => {
   return (
     <Create {...props}>
       <SimpleForm>
+        <TextInput label="Name" source="name" />
+        <TextInput label="test" source="test" />
         <ReferenceArrayInput
           source="users"
           reference="User"
@@ -23,8 +25,6 @@ export const MorCreate = (props: CreateProps): React.ReactElement => {
         >
           <SelectArrayInput optionText={UserTitle} />
         </ReferenceArrayInput>
-        <TextInput label="Name" source="name" />
-        <TextInput label="test" source="test" />
       </SimpleForm>
     </Create>
   );

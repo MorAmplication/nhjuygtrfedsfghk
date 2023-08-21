@@ -1,10 +1,10 @@
 import { StringFilter } from "../../util/StringFilter";
-import { UserListRelationFilter } from "../user/UserListRelationFilter";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
+import { UserListRelationFilter } from "../user/UserListRelationFilter";
 
 export type MorWhereInput = {
   id?: StringFilter;
-  users?: UserListRelationFilter;
   name?: StringNullableFilter;
   test?: StringNullableFilter;
+  users?: UserListRelationFilter;
 };

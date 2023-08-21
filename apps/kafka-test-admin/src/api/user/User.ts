@@ -1,13 +1,13 @@
-import { JsonValue } from "type-fest";
 import { Mor } from "../mor/Mor";
+import { JsonValue } from "type-fest";
 
 export type User = {
-  id: string;
   createdAt: Date;
-  updatedAt: Date;
   firstName: string | null;
+  id: string;
   lastName: string | null;
-  username: string;
-  roles: JsonValue;
   mor?: Mor | null;
+  roles: JsonValue;
+  updatedAt: Date;
+  username: string;
 };

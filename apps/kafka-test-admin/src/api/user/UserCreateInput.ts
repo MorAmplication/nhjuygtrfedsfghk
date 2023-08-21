@@ -1,11 +1,11 @@
-import { InputJsonValue } from "../../types";
 import { MorWhereUniqueInput } from "../mor/MorWhereUniqueInput";
+import { InputJsonValue } from "../../types";
 
 export type UserCreateInput = {
   firstName?: string | null;
   lastName?: string | null;
-  username: string;
+  mor?: MorWhereUniqueInput | null;
   password: string;
   roles: InputJsonValue;
-  mor?: MorWhereUniqueInput | null;
+  username: string;
 };

@@ -5,10 +5,10 @@ import {
   SimpleForm,
   EditProps,
   TextInput,
-  PasswordInput,
-  SelectArrayInput,
   ReferenceInput,
   SelectInput,
+  PasswordInput,
+  SelectArrayInput,
 } from "react-admin";
 
 import { MorTitle } from "../mor/MorTitle";
@@ -20,7 +20,9 @@ export const UserEdit = (props: EditProps): React.ReactElement => {
       <SimpleForm>
         <TextInput label="First Name" source="firstName" />
         <TextInput label="Last Name" source="lastName" />
-        <TextInput label="Username" source="username" />
+        <ReferenceInput source="mor.id" reference="Mor" label="Mor">
+          <SelectInput optionText={MorTitle} />
+        </ReferenceInput>
         <PasswordInput label="Password" source="password" />
         <SelectArrayInput
           source="roles"
@@ -28,9 +30,7 @@ export const UserEdit = (props: EditProps): React.ReactElement => {
           optionText="label"
           optionValue="value"
         />
-        <ReferenceInput source="mor.id" reference="Mor" label="Mor">
-          <SelectInput optionText={MorTitle} />
-        </ReferenceInput>
+        <TextInput label="Username" source="username" />
       </SimpleForm>
     </Edit>
   );

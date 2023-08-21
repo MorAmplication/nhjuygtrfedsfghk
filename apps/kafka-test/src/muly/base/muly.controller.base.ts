@@ -32,8 +32,8 @@ export class MulyControllerBase {
     return await this.service.create({
       data: data,
       select: {
-        id: true,
         createdAt: true,
+        id: true,
         updatedAt: true,
       },
     });
@@ -47,8 +47,8 @@ export class MulyControllerBase {
     return this.service.findMany({
       ...args,
       select: {
-        id: true,
         createdAt: true,
+        id: true,
         updatedAt: true,
       },
     });
@@ -63,8 +63,8 @@ export class MulyControllerBase {
     const result = await this.service.findOne({
       where: params,
       select: {
-        id: true,
         createdAt: true,
+        id: true,
         updatedAt: true,
       },
     });
@@ -88,8 +88,8 @@ export class MulyControllerBase {
         where: params,
         data: data,
         select: {
-          id: true,
           createdAt: true,
+          id: true,
           updatedAt: true,
         },
       });
@@ -113,8 +113,8 @@ export class MulyControllerBase {
       return await this.service.delete({
         where: params,
         select: {
-          id: true,
           createdAt: true,
+          id: true,
           updatedAt: true,
         },
       });
