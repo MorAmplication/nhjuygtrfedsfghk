@@ -35,11 +35,11 @@ export class MorControllerBase {
     return await this.service.create({
       data: data,
       select: {
-        id: true,
         createdAt: true,
-        updatedAt: true,
+        id: true,
         name: true,
         test: true,
+        updatedAt: true,
       },
     });
   }
@@ -52,11 +52,11 @@ export class MorControllerBase {
     return this.service.findMany({
       ...args,
       select: {
-        id: true,
         createdAt: true,
-        updatedAt: true,
+        id: true,
         name: true,
         test: true,
+        updatedAt: true,
       },
     });
   }
@@ -70,11 +70,11 @@ export class MorControllerBase {
     const result = await this.service.findOne({
       where: params,
       select: {
-        id: true,
         createdAt: true,
-        updatedAt: true,
+        id: true,
         name: true,
         test: true,
+        updatedAt: true,
       },
     });
     if (result === null) {
@@ -97,11 +97,11 @@ export class MorControllerBase {
         where: params,
         data: data,
         select: {
-          id: true,
           createdAt: true,
-          updatedAt: true,
+          id: true,
           name: true,
           test: true,
+          updatedAt: true,
         },
       });
     } catch (error) {
@@ -124,11 +124,11 @@ export class MorControllerBase {
       return await this.service.delete({
         where: params,
         select: {
-          id: true,
           createdAt: true,
-          updatedAt: true,
+          id: true,
           name: true,
           test: true,
+          updatedAt: true,
         },
       });
     } catch (error) {
@@ -151,19 +151,20 @@ export class MorControllerBase {
     const results = await this.service.findUsers(params.id, {
       ...query,
       select: {
-        id: true,
         createdAt: true,
-        updatedAt: true,
         firstName: true,
+        id: true,
         lastName: true,
-        username: true,
-        roles: true,
 
         mor: {
           select: {
             id: true,
           },
         },
+
+        roles: true,
+        updatedAt: true,
+        username: true,
       },
     });
     if (results === null) {

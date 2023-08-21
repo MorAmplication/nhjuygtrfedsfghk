@@ -11,23 +11,15 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsDate, IsOptional, ValidateNested } from "class-validator";
+import { IsDate, IsString, IsOptional, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
+import { Mor } from "../../mor/base/Mor";
 import { IsJSONValue } from "@app/custom-validators";
 import { GraphQLJSON } from "graphql-type-json";
 import { JsonValue } from "type-fest";
-import { Mor } from "../../mor/base/Mor";
 
 @ObjectType()
 class User {
-  @ApiProperty({
-    required: true,
-    type: String,
-  })
-  @IsString()
-  @Field(() => String)
-  id!: string;
-
   @ApiProperty({
     required: true,
   })
@@ -35,14 +27,6 @@ class User {
   @Type(() => Date)
   @Field(() => Date)
   createdAt!: Date;
-
-  @ApiProperty({
-    required: true,
-  })
-  @IsDate()
-  @Type(() => Date)
-  @Field(() => Date)
-  updatedAt!: Date;
 
   @ApiProperty({
     required: false,
@@ -56,6 +40,14 @@ class User {
   firstName!: string | null;
 
   @ApiProperty({
+    required: true,
+    type: String,
+  })
+  @IsString()
+  @Field(() => String)
+  id!: string;
+
+  @ApiProperty({
     required: false,
     type: String,
   })
@@ -67,12 +59,13 @@ class User {
   lastName!: string | null;
 
   @ApiProperty({
-    required: true,
-    type: String,
+    required: false,
+    type: () => Mor,
   })
-  @IsString()
-  @Field(() => String)
-  username!: string;
+  @ValidateNested()
+  @Type(() => Mor)
+  @IsOptional()
+  mor?: Mor | null;
 
   @ApiProperty({
     required: true,
@@ -82,13 +75,20 @@ class User {
   roles!: JsonValue;
 
   @ApiProperty({
-    required: false,
-    type: () => Mor,
+    required: true,
   })
-  @ValidateNested()
-  @Type(() => Mor)
-  @IsOptional()
-  mor?: Mor | null;
+  @IsDate()
+  @Type(() => Date)
+  @Field(() => Date)
+  updatedAt!: Date;
+
+  @ApiProperty({
+    required: true,
+    type: String,
+  })
+  @IsString()
+  @Field(() => String)
+  username!: string;
 }
 
 export { User as User };

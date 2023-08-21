@@ -1,11 +1,11 @@
-import { StringFilter } from "../../util/StringFilter";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
+import { StringFilter } from "../../util/StringFilter";
 import { MorWhereUniqueInput } from "../mor/MorWhereUniqueInput";
 
 export type UserWhereInput = {
-  id?: StringFilter;
   firstName?: StringNullableFilter;
+  id?: StringFilter;
   lastName?: StringNullableFilter;
-  username?: StringFilter;
   mor?: MorWhereUniqueInput;
+  username?: StringFilter;
 };

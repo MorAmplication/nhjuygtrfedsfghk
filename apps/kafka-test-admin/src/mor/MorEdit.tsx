@@ -4,9 +4,9 @@ import {
   Edit,
   SimpleForm,
   EditProps,
+  TextInput,
   ReferenceArrayInput,
   SelectArrayInput,
-  TextInput,
 } from "react-admin";
 
 import { UserTitle } from "../user/UserTitle";
@@ -15,6 +15,8 @@ export const MorEdit = (props: EditProps): React.ReactElement => {
   return (
     <Edit {...props}>
       <SimpleForm>
+        <TextInput label="Name" source="name" />
+        <TextInput label="test" source="test" />
         <ReferenceArrayInput
           source="users"
           reference="User"
@@ -23,8 +25,6 @@ export const MorEdit = (props: EditProps): React.ReactElement => {
         >
           <SelectArrayInput optionText={UserTitle} />
         </ReferenceArrayInput>
-        <TextInput label="Name" source="name" />
-        <TextInput label="test" source="test" />
       </SimpleForm>
     </Edit>
   );

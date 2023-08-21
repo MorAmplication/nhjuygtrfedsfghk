@@ -32,11 +32,11 @@ export class LoginControllerBase {
     return await this.service.create({
       data: data,
       select: {
-        id: true,
-        createdAt: true,
-        updatedAt: true,
         accessKey: true,
+        createdAt: true,
+        id: true,
         testKey: true,
+        updatedAt: true,
       },
     });
   }
@@ -49,11 +49,11 @@ export class LoginControllerBase {
     return this.service.findMany({
       ...args,
       select: {
-        id: true,
-        createdAt: true,
-        updatedAt: true,
         accessKey: true,
+        createdAt: true,
+        id: true,
         testKey: true,
+        updatedAt: true,
       },
     });
   }
@@ -67,11 +67,11 @@ export class LoginControllerBase {
     const result = await this.service.findOne({
       where: params,
       select: {
-        id: true,
-        createdAt: true,
-        updatedAt: true,
         accessKey: true,
+        createdAt: true,
+        id: true,
         testKey: true,
+        updatedAt: true,
       },
     });
     if (result === null) {
@@ -94,11 +94,11 @@ export class LoginControllerBase {
         where: params,
         data: data,
         select: {
-          id: true,
-          createdAt: true,
-          updatedAt: true,
           accessKey: true,
+          createdAt: true,
+          id: true,
           testKey: true,
+          updatedAt: true,
         },
       });
     } catch (error) {
@@ -121,11 +121,11 @@ export class LoginControllerBase {
       return await this.service.delete({
         where: params,
         select: {
-          id: true,
-          createdAt: true,
-          updatedAt: true,
           accessKey: true,
+          createdAt: true,
+          id: true,
           testKey: true,
+          updatedAt: true,
         },
       });
     } catch (error) {

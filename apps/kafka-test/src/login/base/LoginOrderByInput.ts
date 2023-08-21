@@ -28,7 +28,7 @@ class LoginOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
-  id?: SortOrder;
+  accessKey?: SortOrder;
 
   @ApiProperty({
     required: false,
@@ -50,18 +50,7 @@ class LoginOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
-  updatedAt?: SortOrder;
-
-  @ApiProperty({
-    required: false,
-    enum: ["asc", "desc"],
-  })
-  @IsOptional()
-  @IsEnum(SortOrder)
-  @Field(() => SortOrder, {
-    nullable: true,
-  })
-  accessKey?: SortOrder;
+  id?: SortOrder;
 
   @ApiProperty({
     required: false,
@@ -73,6 +62,17 @@ class LoginOrderByInput {
     nullable: true,
   })
   testKey?: SortOrder;
+
+  @ApiProperty({
+    required: false,
+    enum: ["asc", "desc"],
+  })
+  @IsOptional()
+  @IsEnum(SortOrder)
+  @Field(() => SortOrder, {
+    nullable: true,
+  })
+  updatedAt?: SortOrder;
 }
 
 export { LoginOrderByInput as LoginOrderByInput };

@@ -12,11 +12,11 @@ https://docs.amplication.com/how-to/custom-code
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsString, IsOptional, ValidateNested } from "class-validator";
+import { MorWhereUniqueInput } from "../../mor/base/MorWhereUniqueInput";
+import { Type } from "class-transformer";
 import { IsJSONValue } from "@app/custom-validators";
 import { GraphQLJSON } from "graphql-type-json";
 import { InputJsonValue } from "../../types";
-import { MorWhereUniqueInput } from "../../mor/base/MorWhereUniqueInput";
-import { Type } from "class-transformer";
 
 @InputType()
 class UserUpdateInput {
@@ -44,14 +44,15 @@ class UserUpdateInput {
 
   @ApiProperty({
     required: false,
-    type: String,
+    type: () => MorWhereUniqueInput,
   })
-  @IsString()
+  @ValidateNested()
+  @Type(() => MorWhereUniqueInput)
   @IsOptional()
-  @Field(() => String, {
+  @Field(() => MorWhereUniqueInput, {
     nullable: true,
   })
-  username?: string;
+  mor?: MorWhereUniqueInput | null;
 
   @ApiProperty({
     required: false,
@@ -76,15 +77,14 @@ class UserUpdateInput {
 
   @ApiProperty({
     required: false,
-    type: () => MorWhereUniqueInput,
+    type: String,
   })
-  @ValidateNested()
-  @Type(() => MorWhereUniqueInput)
+  @IsString()
   @IsOptional()
-  @Field(() => MorWhereUniqueInput, {
+  @Field(() => String, {
     nullable: true,
   })
-  mor?: MorWhereUniqueInput | null;
+  username?: string;
 }
 
 export { UserUpdateInput as UserUpdateInput };

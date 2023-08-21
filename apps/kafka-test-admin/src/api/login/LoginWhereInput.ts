@@ -1,8 +1,8 @@
-import { StringFilter } from "../../util/StringFilter";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
+import { StringFilter } from "../../util/StringFilter";
 
 export type LoginWhereInput = {
-  id?: StringFilter;
   accessKey?: StringNullableFilter;
+  id?: StringFilter;
   testKey?: StringNullableFilter;
 };

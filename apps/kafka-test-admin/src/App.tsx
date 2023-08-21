@@ -21,6 +21,10 @@ import { MulyList } from "./muly/MulyList";
 import { MulyCreate } from "./muly/MulyCreate";
 import { MulyEdit } from "./muly/MulyEdit";
 import { MulyShow } from "./muly/MulyShow";
+import { AmitList } from "./amit/AmitList";
+import { AmitCreate } from "./amit/AmitCreate";
+import { AmitEdit } from "./amit/AmitEdit";
+import { AmitShow } from "./amit/AmitShow";
 import { jwtAuthProvider } from "./auth-provider/ra-auth-jwt";
 
 const App = (): React.ReactElement => {
@@ -40,7 +44,7 @@ const App = (): React.ReactElement => {
   return (
     <div className="App">
       <Admin
-        title={"KAFKA-TEST"}
+        title={"KAFKA TEST"}
         dataProvider={dataProvider}
         authProvider={jwtAuthProvider}
         theme={theme}
@@ -74,6 +78,13 @@ const App = (): React.ReactElement => {
           edit={MulyEdit}
           create={MulyCreate}
           show={MulyShow}
+        />
+        <Resource
+          name="Amit"
+          list={AmitList}
+          edit={AmitEdit}
+          create={AmitCreate}
+          show={AmitShow}
         />
       </Admin>
     </div>

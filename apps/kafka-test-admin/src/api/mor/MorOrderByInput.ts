@@ -1,9 +1,9 @@
 import { SortOrder } from "../../util/SortOrder";
 
 export type MorOrderByInput = {
-  id?: SortOrder;
   createdAt?: SortOrder;
-  updatedAt?: SortOrder;
+  id?: SortOrder;
   name?: SortOrder;
   test?: SortOrder;
+  updatedAt?: SortOrder;
 };
