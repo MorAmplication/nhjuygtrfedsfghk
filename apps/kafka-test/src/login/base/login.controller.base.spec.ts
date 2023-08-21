@@ -24,6 +24,10 @@ const CREATE_INPUT = {
   updatedAt: new Date(),
   accessKey: "exampleAccessKey",
   testKey: "exampleTestKey",
+  test: "exampleTest",
+  tttt: "exampleTttt",
+  username: "exampleUsername",
+  password: "examplePassword",
 };
 const CREATE_RESULT = {
   id: "exampleId",
@@ -31,6 +35,10 @@ const CREATE_RESULT = {
   updatedAt: new Date(),
   accessKey: "exampleAccessKey",
   testKey: "exampleTestKey",
+  test: "exampleTest",
+  tttt: "exampleTttt",
+  username: "exampleUsername",
+  password: "examplePassword",
 };
 const FIND_MANY_RESULT = [
   {
@@ -39,6 +47,10 @@ const FIND_MANY_RESULT = [
     updatedAt: new Date(),
     accessKey: "exampleAccessKey",
     testKey: "exampleTestKey",
+    test: "exampleTest",
+    tttt: "exampleTttt",
+    username: "exampleUsername",
+    password: "examplePassword",
   },
 ];
 const FIND_ONE_RESULT = {
@@ -47,6 +59,10 @@ const FIND_ONE_RESULT = {
   updatedAt: new Date(),
   accessKey: "exampleAccessKey",
   testKey: "exampleTestKey",
+  test: "exampleTest",
+  tttt: "exampleTttt",
+  username: "exampleUsername",
+  password: "examplePassword",
 };
 
 const service = {
