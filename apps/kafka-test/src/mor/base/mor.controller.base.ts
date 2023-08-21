@@ -16,7 +16,11 @@ import * as errors from "../../errors";
 import { Request } from "express";
 import { plainToClass } from "class-transformer";
 import { ApiNestedQuery } from "../../decorators/api-nested-query.decorator";
+import * as nestAccessControl from "nest-access-control";
+import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
 import { MorService } from "../mor.service";
+import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
+import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { MorCreateInput } from "./MorCreateInput";
 import { MorWhereInput } from "./MorWhereInput";
 import { MorWhereUniqueInput } from "./MorWhereUniqueInput";
@@ -27,10 +31,24 @@ import { UserFindManyArgs } from "../../user/base/UserFindManyArgs";
 import { User } from "../../user/base/User";
 import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
 
+@swagger.ApiBearerAuth()
+@common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
 export class MorControllerBase {
-  constructor(protected readonly service: MorService) {}
+  constructor(
+    protected readonly service: MorService,
+    protected readonly rolesBuilder: nestAccessControl.RolesBuilder
+  ) {}
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Post()
   @swagger.ApiCreatedResponse({ type: Mor })
+  @nestAccessControl.UseRoles({
+    resource: "Mor",
+    action: "create",
+    possession: "any",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async create(@common.Body() data: MorCreateInput): Promise<Mor> {
     return await this.service.create({
       data: data,
@@ -44,9 +62,18 @@ export class MorControllerBase {
     });
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get()
   @swagger.ApiOkResponse({ type: [Mor] })
   @ApiNestedQuery(MorFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: "Mor",
+    action: "read",
+    possession: "any",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async findMany(@common.Req() request: Request): Promise<Mor[]> {
     const args = plainToClass(MorFindManyArgs, request.query);
     return this.service.findMany({
@@ -61,9 +88,18 @@ export class MorControllerBase {
     });
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get("/:id")
   @swagger.ApiOkResponse({ type: Mor })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: "Mor",
+    action: "read",
+    possession: "own",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async findOne(
     @common.Param() params: MorWhereUniqueInput
   ): Promise<Mor | null> {
@@ -85,9 +121,18 @@ export class MorControllerBase {
     return result;
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Patch("/:id")
   @swagger.ApiOkResponse({ type: Mor })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: "Mor",
+    action: "update",
+    possession: "any",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async update(
     @common.Param() params: MorWhereUniqueInput,
     @common.Body() data: MorUpdateInput
@@ -117,6 +162,14 @@ export class MorControllerBase {
   @common.Delete("/:id")
   @swagger.ApiOkResponse({ type: Mor })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: "Mor",
+    action: "delete",
+    possession: "any",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async delete(
     @common.Param() params: MorWhereUniqueInput
   ): Promise<Mor | null> {
@@ -141,8 +194,14 @@ export class MorControllerBase {
     }
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get("/:id/users")
   @ApiNestedQuery(UserFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "read",
+    possession: "any",
+  })
   async findManyUsers(
     @common.Req() request: Request,
     @common.Param() params: MorWhereUniqueInput
@@ -175,6 +234,11 @@ export class MorControllerBase {
   }
 
   @common.Post("/:id/users")
+  @nestAccessControl.UseRoles({
+    resource: "Mor",
+    action: "update",
+    possession: "any",
+  })
   async connectUsers(
     @common.Param() params: MorWhereUniqueInput,
     @common.Body() body: UserWhereUniqueInput[]
@@ -192,6 +256,11 @@ export class MorControllerBase {
   }
 
   @common.Patch("/:id/users")
+  @nestAccessControl.UseRoles({
+    resource: "Mor",
+    action: "update",
+    possession: "any",
+  })
   async updateUsers(
     @common.Param() params: MorWhereUniqueInput,
     @common.Body() body: UserWhereUniqueInput[]
@@ -209,6 +278,11 @@ export class MorControllerBase {
   }
 
   @common.Delete("/:id/users")
+  @nestAccessControl.UseRoles({
+    resource: "Mor",
+    action: "update",
+    possession: "any",
+  })
   async disconnectUsers(
     @common.Param() params: MorWhereUniqueInput,
     @common.Body() body: UserWhereUniqueInput[]

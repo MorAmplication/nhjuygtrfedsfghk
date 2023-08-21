@@ -11,7 +11,11 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsOptional } from "class-validator";
+import { IsString, IsOptional, IsEnum } from "class-validator";
+import { EnumLoginTestFd8efue } from "./EnumLoginTestFd8efue";
+import { IsJSONValue } from "@app/custom-validators";
+import { GraphQLJSON } from "graphql-type-json";
+import { InputJsonValue } from "../../types";
 
 @InputType()
 class LoginCreateInput {
@@ -36,6 +40,65 @@ class LoginCreateInput {
     nullable: true,
   })
   testKey?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  test?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  tttt?: string | null;
+
+  @ApiProperty({
+    required: false,
+    enum: EnumLoginTestFd8efue,
+    isArray: true,
+  })
+  @IsEnum(EnumLoginTestFd8efue, {
+    each: true,
+  })
+  @IsOptional()
+  @Field(() => [EnumLoginTestFd8efue], {
+    nullable: true,
+  })
+  testFd8efue?: Array<"_Table_eosbho" | "tabpoeol1">;
+
+  @ApiProperty({
+    required: true,
+    type: String,
+  })
+  @IsString()
+  @Field(() => String)
+  username!: string;
+
+  @ApiProperty({
+    required: true,
+    type: String,
+  })
+  @IsString()
+  @Field(() => String)
+  password!: string;
+
+  @ApiProperty({
+    required: true,
+  })
+  @IsJSONValue()
+  @Field(() => GraphQLJSON)
+  roles!: InputJsonValue;
 }
 
 export { LoginCreateInput as LoginCreateInput };

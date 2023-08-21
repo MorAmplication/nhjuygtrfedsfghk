@@ -30,15 +30,33 @@ model Mor {
 }
 
 model Login {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  accessKey String?
-  testKey   String?
+  id          String                 @id @default(cuid())
+  createdAt   DateTime               @default(now())
+  updatedAt   DateTime               @updatedAt
+  accessKey   String?
+  testKey     String?
+  test        String?
+  tttt        String?
+  testFd8efue EnumLoginTestFd8efue[]
+  username    String                 @unique
+  password    String
+  roles       Json
 }
 
 model Muly {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Amit {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  nameFirst String?
+}
+
+enum EnumLoginTestFd8efue {
+  _Table_eosbho
+  tabpoeol1
 }
