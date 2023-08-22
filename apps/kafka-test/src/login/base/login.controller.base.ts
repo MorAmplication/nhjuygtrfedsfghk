@@ -16,7 +16,11 @@ import * as errors from "../../errors";
 import { Request } from "express";
 import { plainToClass } from "class-transformer";
 import { ApiNestedQuery } from "../../decorators/api-nested-query.decorator";
+import * as nestAccessControl from "nest-access-control";
+import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
 import { LoginService } from "../login.service";
+import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
+import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { LoginCreateInput } from "./LoginCreateInput";
 import { LoginWhereInput } from "./LoginWhereInput";
 import { LoginWhereUniqueInput } from "./LoginWhereUniqueInput";
@@ -24,10 +28,24 @@ import { LoginFindManyArgs } from "./LoginFindManyArgs";
 import { LoginUpdateInput } from "./LoginUpdateInput";
 import { Login } from "./Login";
 
+@swagger.ApiBearerAuth()
+@common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
 export class LoginControllerBase {
-  constructor(protected readonly service: LoginService) {}
+  constructor(
+    protected readonly service: LoginService,
+    protected readonly rolesBuilder: nestAccessControl.RolesBuilder
+  ) {}
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Post()
   @swagger.ApiCreatedResponse({ type: Login })
+  @nestAccessControl.UseRoles({
+    resource: "Login",
+    action: "create",
+    possession: "any",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async create(@common.Body() data: LoginCreateInput): Promise<Login> {
     return await this.service.create({
       data: data,
@@ -37,13 +55,27 @@ export class LoginControllerBase {
         updatedAt: true,
         accessKey: true,
         testKey: true,
+        test: true,
+        tttt: true,
+        testFd8efue: true,
+        username: true,
+        roles: true,
       },
     });
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get()
   @swagger.ApiOkResponse({ type: [Login] })
   @ApiNestedQuery(LoginFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: "Login",
+    action: "read",
+    possession: "any",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async findMany(@common.Req() request: Request): Promise<Login[]> {
     const args = plainToClass(LoginFindManyArgs, request.query);
     return this.service.findMany({
@@ -54,13 +86,27 @@ export class LoginControllerBase {
         updatedAt: true,
         accessKey: true,
         testKey: true,
+        test: true,
+        tttt: true,
+        testFd8efue: true,
+        username: true,
+        roles: true,
       },
     });
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get("/:id")
   @swagger.ApiOkResponse({ type: Login })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: "Login",
+    action: "read",
+    possession: "own",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async findOne(
     @common.Param() params: LoginWhereUniqueInput
   ): Promise<Login | null> {
@@ -72,6 +118,11 @@ export class LoginControllerBase {
         updatedAt: true,
         accessKey: true,
         testKey: true,
+        test: true,
+        tttt: true,
+        testFd8efue: true,
+        username: true,
+        roles: true,
       },
     });
     if (result === null) {
@@ -82,9 +133,18 @@ export class LoginControllerBase {
     return result;
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Patch("/:id")
   @swagger.ApiOkResponse({ type: Login })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: "Login",
+    action: "update",
+    possession: "any",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async update(
     @common.Param() params: LoginWhereUniqueInput,
     @common.Body() data: LoginUpdateInput
@@ -99,6 +159,11 @@ export class LoginControllerBase {
           updatedAt: true,
           accessKey: true,
           testKey: true,
+          test: true,
+          tttt: true,
+          testFd8efue: true,
+          username: true,
+          roles: true,
         },
       });
     } catch (error) {
@@ -114,6 +179,14 @@ export class LoginControllerBase {
   @common.Delete("/:id")
   @swagger.ApiOkResponse({ type: Login })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: "Login",
+    action: "delete",
+    possession: "any",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async delete(
     @common.Param() params: LoginWhereUniqueInput
   ): Promise<Login | null> {
@@ -126,6 +199,11 @@ export class LoginControllerBase {
           updatedAt: true,
           accessKey: true,
           testKey: true,
+          test: true,
+          tttt: true,
+          testFd8efue: true,
+          username: true,
+          roles: true,
         },
       });
     } catch (error) {

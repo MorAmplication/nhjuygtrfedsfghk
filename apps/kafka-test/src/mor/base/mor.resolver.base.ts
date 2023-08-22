@@ -13,6 +13,12 @@ import * as graphql from "@nestjs/graphql";
 import * as apollo from "apollo-server-express";
 import { isRecordNotFoundError } from "../../prisma.util";
 import { MetaQueryPayload } from "../../util/MetaQueryPayload";
+import * as nestAccessControl from "nest-access-control";
+import * as gqlACGuard from "../../auth/gqlAC.guard";
+import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
+import * as common from "@nestjs/common";
+import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
+import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { CreateMorArgs } from "./CreateMorArgs";
 import { UpdateMorArgs } from "./UpdateMorArgs";
 import { DeleteMorArgs } from "./DeleteMorArgs";
@@ -23,10 +29,20 @@ import { Mor } from "./Mor";
 import { UserFindManyArgs } from "../../user/base/UserFindManyArgs";
 import { User } from "../../user/base/User";
 import { MorService } from "../mor.service";
+@common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => Mor)
 export class MorResolverBase {
-  constructor(protected readonly service: MorService) {}
+  constructor(
+    protected readonly service: MorService,
+    protected readonly rolesBuilder: nestAccessControl.RolesBuilder
+  ) {}
 
+  @graphql.Query(() => MetaQueryPayload)
+  @nestAccessControl.UseRoles({
+    resource: "Mor",
+    action: "read",
+    possession: "any",
+  })
   async _morsMeta(
     @graphql.Args() args: MorCountArgs
   ): Promise<MetaQueryPayload> {
@@ -36,12 +52,24 @@ export class MorResolverBase {
     };
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => [Mor])
+  @nestAccessControl.UseRoles({
+    resource: "Mor",
+    action: "read",
+    possession: "any",
+  })
   async mors(@graphql.Args() args: MorFindManyArgs): Promise<Mor[]> {
     return this.service.findMany(args);
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => Mor, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: "Mor",
+    action: "read",
+    possession: "own",
+  })
   async mor(@graphql.Args() args: MorFindUniqueArgs): Promise<Mor | null> {
     const result = await this.service.findOne(args);
     if (result === null) {
@@ -50,7 +78,13 @@ export class MorResolverBase {
     return result;
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => Mor)
+  @nestAccessControl.UseRoles({
+    resource: "Mor",
+    action: "create",
+    possession: "any",
+  })
   async createMor(@graphql.Args() args: CreateMorArgs): Promise<Mor> {
     return await this.service.create({
       ...args,
@@ -58,7 +92,13 @@ export class MorResolverBase {
     });
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => Mor)
+  @nestAccessControl.UseRoles({
+    resource: "Mor",
+    action: "update",
+    possession: "any",
+  })
   async updateMor(@graphql.Args() args: UpdateMorArgs): Promise<Mor | null> {
     try {
       return await this.service.update({
@@ -76,6 +116,11 @@ export class MorResolverBase {
   }
 
   @graphql.Mutation(() => Mor)
+  @nestAccessControl.UseRoles({
+    resource: "Mor",
+    action: "delete",
+    possession: "any",
+  })
   async deleteMor(@graphql.Args() args: DeleteMorArgs): Promise<Mor | null> {
     try {
       return await this.service.delete(args);
@@ -89,7 +134,13 @@ export class MorResolverBase {
     }
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => [User], { name: "users" })
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "read",
+    possession: "any",
+  })
   async resolveFieldUsers(
     @graphql.Parent() parent: Mor,
     @graphql.Args() args: UserFindManyArgs

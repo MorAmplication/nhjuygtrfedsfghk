@@ -11,9 +11,14 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { PrismaService } from "../../prisma/prisma.service";
 import { Prisma, Login } from "@prisma/client";
+import { PasswordService } from "../../auth/password.service";
+import { transformStringFieldUpdateInput } from "../../prisma.util";
 
 export class LoginServiceBase {
-  constructor(protected readonly prisma: PrismaService) {}
+  constructor(
+    protected readonly prisma: PrismaService,
+    protected readonly passwordService: PasswordService
+  ) {}
 
   async count<T extends Prisma.LoginCountArgs>(
     args: Prisma.SelectSubset<T, Prisma.LoginCountArgs>
@@ -34,12 +39,32 @@ export class LoginServiceBase {
   async create<T extends Prisma.LoginCreateArgs>(
     args: Prisma.SelectSubset<T, Prisma.LoginCreateArgs>
   ): Promise<Login> {
-    return this.prisma.login.create<T>(args);
+    return this.prisma.login.create<T>({
+      ...args,
+
+      data: {
+        ...args.data,
+        password: await this.passwordService.hash(args.data.password),
+      },
+    });
   }
   async update<T extends Prisma.LoginUpdateArgs>(
     args: Prisma.SelectSubset<T, Prisma.LoginUpdateArgs>
   ): Promise<Login> {
-    return this.prisma.login.update<T>(args);
+    return this.prisma.login.update<T>({
+      ...args,
+
+      data: {
+        ...args.data,
+
+        password:
+          args.data.password &&
+          (await transformStringFieldUpdateInput(
+            args.data.password,
+            (password) => this.passwordService.hash(password)
+          )),
+      },
+    });
   }
   async delete<T extends Prisma.LoginDeleteArgs>(
     args: Prisma.SelectSubset<T, Prisma.LoginDeleteArgs>

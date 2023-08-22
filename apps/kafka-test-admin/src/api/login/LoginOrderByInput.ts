@@ -6,4 +6,10 @@ export type LoginOrderByInput = {
   updatedAt?: SortOrder;
   accessKey?: SortOrder;
   testKey?: SortOrder;
+  test?: SortOrder;
+  tttt?: SortOrder;
+  testFd8efue?: SortOrder;
+  username?: SortOrder;
+  password?: SortOrder;
+  roles?: SortOrder;
 };

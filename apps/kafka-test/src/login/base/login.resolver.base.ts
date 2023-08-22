@@ -13,6 +13,12 @@ import * as graphql from "@nestjs/graphql";
 import * as apollo from "apollo-server-express";
 import { isRecordNotFoundError } from "../../prisma.util";
 import { MetaQueryPayload } from "../../util/MetaQueryPayload";
+import * as nestAccessControl from "nest-access-control";
+import * as gqlACGuard from "../../auth/gqlAC.guard";
+import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
+import * as common from "@nestjs/common";
+import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
+import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { CreateLoginArgs } from "./CreateLoginArgs";
 import { UpdateLoginArgs } from "./UpdateLoginArgs";
 import { DeleteLoginArgs } from "./DeleteLoginArgs";
@@ -21,10 +27,20 @@ import { LoginFindManyArgs } from "./LoginFindManyArgs";
 import { LoginFindUniqueArgs } from "./LoginFindUniqueArgs";
 import { Login } from "./Login";
 import { LoginService } from "../login.service";
+@common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => Login)
 export class LoginResolverBase {
-  constructor(protected readonly service: LoginService) {}
+  constructor(
+    protected readonly service: LoginService,
+    protected readonly rolesBuilder: nestAccessControl.RolesBuilder
+  ) {}
 
+  @graphql.Query(() => MetaQueryPayload)
+  @nestAccessControl.UseRoles({
+    resource: "Login",
+    action: "read",
+    possession: "any",
+  })
   async _loginsMeta(
     @graphql.Args() args: LoginCountArgs
   ): Promise<MetaQueryPayload> {
@@ -34,12 +50,24 @@ export class LoginResolverBase {
     };
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => [Login])
+  @nestAccessControl.UseRoles({
+    resource: "Login",
+    action: "read",
+    possession: "any",
+  })
   async logins(@graphql.Args() args: LoginFindManyArgs): Promise<Login[]> {
     return this.service.findMany(args);
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => Login, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: "Login",
+    action: "read",
+    possession: "own",
+  })
   async login(
     @graphql.Args() args: LoginFindUniqueArgs
   ): Promise<Login | null> {
@@ -50,7 +78,13 @@ export class LoginResolverBase {
     return result;
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => Login)
+  @nestAccessControl.UseRoles({
+    resource: "Login",
+    action: "create",
+    possession: "any",
+  })
   async createLogin(@graphql.Args() args: CreateLoginArgs): Promise<Login> {
     return await this.service.create({
       ...args,
@@ -58,7 +92,13 @@ export class LoginResolverBase {
     });
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => Login)
+  @nestAccessControl.UseRoles({
+    resource: "Login",
+    action: "update",
+    possession: "any",
+  })
   async updateLogin(
     @graphql.Args() args: UpdateLoginArgs
   ): Promise<Login | null> {
@@ -78,6 +118,11 @@ export class LoginResolverBase {
   }
 
   @graphql.Mutation(() => Login)
+  @nestAccessControl.UseRoles({
+    resource: "Login",
+    action: "delete",
+    possession: "any",
+  })
   async deleteLogin(
     @graphql.Args() args: DeleteLoginArgs
   ): Promise<Login | null> {
