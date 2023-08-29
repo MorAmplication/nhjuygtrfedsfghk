@@ -26,8 +26,6 @@ import { MorCountArgs } from "./MorCountArgs";
 import { MorFindManyArgs } from "./MorFindManyArgs";
 import { MorFindUniqueArgs } from "./MorFindUniqueArgs";
 import { Mor } from "./Mor";
-import { UserFindManyArgs } from "../../user/base/UserFindManyArgs";
-import { User } from "../../user/base/User";
 import { MorService } from "../mor.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => Mor)
@@ -132,25 +130,5 @@ export class MorResolverBase {
       }
       throw error;
     }
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => [User], { name: "users" })
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "read",
-    possession: "any",
-  })
-  async resolveFieldUsers(
-    @graphql.Parent() parent: Mor,
-    @graphql.Args() args: UserFindManyArgs
-  ): Promise<User[]> {
-    const results = await this.service.findUsers(parent.id, args);
-
-    if (!results) {
-      return [];
-    }
-
-    return results;
   }
 }

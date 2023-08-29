@@ -2,8 +2,8 @@ import { UnauthorizedException } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
 import { ExtractJwt, Strategy } from "passport-jwt";
 import { IAuthStrategy } from "../../IAuthStrategy";
-import { LoginInfo } from "../../LoginInfo";
-import { LoginService } from "../../../login/login.service";
+import { MorInfo } from "../../MorInfo";
+import { MorService } from "../../../mor/mor.service";
 
 export class JwtStrategyBase
   extends PassportStrategy(Strategy)
@@ -11,7 +11,7 @@ export class JwtStrategyBase
 {
   constructor(
     protected readonly secretOrKey: string,
-    protected readonly loginService: LoginService
+    protected readonly morService: MorService
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -20,9 +20,9 @@ export class JwtStrategyBase
     });
   }
 
-  async validate(payload: LoginInfo): Promise<LoginInfo> {
+  async validate(payload: MorInfo): Promise<MorInfo> {
     const { username } = payload;
-    const user = await this.loginService.findOne({
+    const user = await this.morService.findOne({
       where: { username },
     });
     if (!user) {
