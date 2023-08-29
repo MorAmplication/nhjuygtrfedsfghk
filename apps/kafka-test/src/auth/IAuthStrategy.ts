@@ -1,5 +1,5 @@
-import { LoginInfo } from "./LoginInfo";
+import { MorInfo } from "./MorInfo";
 
 export interface IAuthStrategy {
-  validate: (...any: any) => Promise<LoginInfo>;
+  validate: (...any: any) => Promise<MorInfo>;
 }

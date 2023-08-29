@@ -1,9 +1,9 @@
 import { Credentials } from "../../auth/Credentials";
-import { LoginInfo } from "../../auth/LoginInfo";
+import { MorInfo } from "../../auth/MorInfo";
 
 export const VALID_ID = "1";
 
-export const TEST_USER: LoginInfo = {
+export const TEST_USER: MorInfo = {
   id: "cl7qmjh4h0000tothyjqapgj5",
   roles: ["User"],
   username: "ofek",
