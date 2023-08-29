@@ -6,4 +6,5 @@ export type MorWhereInput = {
   name?: StringNullableFilter;
   test?: StringNullableFilter;
   mmmm?: StringNullableFilter;
+  ffff?: StringNullableFilter;
 };

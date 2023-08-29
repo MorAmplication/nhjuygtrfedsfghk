@@ -60,6 +60,17 @@ class MorUpdateInput {
   @Field(() => String, {
     nullable: true,
   })
+  ffff?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
   username?: string;
 
   @ApiProperty({
