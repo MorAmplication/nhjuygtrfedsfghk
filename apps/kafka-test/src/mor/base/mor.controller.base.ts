@@ -27,9 +27,6 @@ import { MorWhereUniqueInput } from "./MorWhereUniqueInput";
 import { MorFindManyArgs } from "./MorFindManyArgs";
 import { MorUpdateInput } from "./MorUpdateInput";
 import { Mor } from "./Mor";
-import { UserFindManyArgs } from "../../user/base/UserFindManyArgs";
-import { User } from "../../user/base/User";
-import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
 
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
@@ -58,6 +55,8 @@ export class MorControllerBase {
         updatedAt: true,
         name: true,
         test: true,
+        username: true,
+        roles: true,
       },
     });
   }
@@ -84,6 +83,8 @@ export class MorControllerBase {
         updatedAt: true,
         name: true,
         test: true,
+        username: true,
+        roles: true,
       },
     });
   }
@@ -111,6 +112,8 @@ export class MorControllerBase {
         updatedAt: true,
         name: true,
         test: true,
+        username: true,
+        roles: true,
       },
     });
     if (result === null) {
@@ -147,6 +150,8 @@ export class MorControllerBase {
           updatedAt: true,
           name: true,
           test: true,
+          username: true,
+          roles: true,
         },
       });
     } catch (error) {
@@ -182,6 +187,8 @@ export class MorControllerBase {
           updatedAt: true,
           name: true,
           test: true,
+          username: true,
+          roles: true,
         },
       });
     } catch (error) {
@@ -192,110 +199,5 @@ export class MorControllerBase {
       }
       throw error;
     }
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @common.Get("/:id/users")
-  @ApiNestedQuery(UserFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "read",
-    possession: "any",
-  })
-  async findManyUsers(
-    @common.Req() request: Request,
-    @common.Param() params: MorWhereUniqueInput
-  ): Promise<User[]> {
-    const query = plainToClass(UserFindManyArgs, request.query);
-    const results = await this.service.findUsers(params.id, {
-      ...query,
-      select: {
-        id: true,
-        createdAt: true,
-        updatedAt: true,
-        firstName: true,
-        lastName: true,
-        username: true,
-        roles: true,
-
-        mor: {
-          select: {
-            id: true,
-          },
-        },
-      },
-    });
-    if (results === null) {
-      throw new errors.NotFoundException(
-        `No resource was found for ${JSON.stringify(params)}`
-      );
-    }
-    return results;
-  }
-
-  @common.Post("/:id/users")
-  @nestAccessControl.UseRoles({
-    resource: "Mor",
-    action: "update",
-    possession: "any",
-  })
-  async connectUsers(
-    @common.Param() params: MorWhereUniqueInput,
-    @common.Body() body: UserWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      users: {
-        connect: body,
-      },
-    };
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.Patch("/:id/users")
-  @nestAccessControl.UseRoles({
-    resource: "Mor",
-    action: "update",
-    possession: "any",
-  })
-  async updateUsers(
-    @common.Param() params: MorWhereUniqueInput,
-    @common.Body() body: UserWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      users: {
-        set: body,
-      },
-    };
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.Delete("/:id/users")
-  @nestAccessControl.UseRoles({
-    resource: "Mor",
-    action: "update",
-    possession: "any",
-  })
-  async disconnectUsers(
-    @common.Param() params: MorWhereUniqueInput,
-    @common.Body() body: UserWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      users: {
-        disconnect: body,
-      },
-    };
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
   }
 }
