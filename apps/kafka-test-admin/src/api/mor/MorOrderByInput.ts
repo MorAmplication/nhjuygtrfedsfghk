@@ -6,4 +6,8 @@ export type MorOrderByInput = {
   updatedAt?: SortOrder;
   name?: SortOrder;
   test?: SortOrder;
+  mmmm?: SortOrder;
+  username?: SortOrder;
+  password?: SortOrder;
+  roles?: SortOrder;
 };

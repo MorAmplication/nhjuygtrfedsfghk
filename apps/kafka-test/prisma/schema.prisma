@@ -7,46 +7,16 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model User {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  firstName String?
-  lastName  String?
-  username  String   @unique
-  password  String
-  roles     Json
-  mor       Mor?     @relation(fields: [morId], references: [id])
-  morId     String?
-}
-
 model Mor {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  users     User[]
   name      String?
   test String? @(morTest44)
-}
-
-model Login {
-  id          String                 @id @default(cuid())
-  createdAt   DateTime               @default(now())
-  updatedAt   DateTime               @updatedAt
-  accessKey   String?
-  testKey     String?
-  test        String?
-  tttt        String?
-  testFd8efue EnumLoginTestFd8efue[]
-  username    String                 @unique
-  password    String
-  roles       Json
-}
-
-model Muly {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  mmmm      String?
+  username  String   @unique
+  password  String
+  roles     Json
 }
 
 model Amit {
@@ -54,9 +24,4 @@ model Amit {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   nameFirst String?
-}
-
-enum EnumLoginTestFd8efue {
-  _Table_eosbho
-  tabpoeol1
 }

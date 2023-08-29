@@ -1,7 +1,10 @@
-import { UserCreateNestedManyWithoutMorsInput } from "./UserCreateNestedManyWithoutMorsInput";
+import { InputJsonValue } from "../../types";
 
 export type MorCreateInput = {
-  users?: UserCreateNestedManyWithoutMorsInput;
   name?: string | null;
   test?: string | null;
+  mmmm?: string | null;
+  username: string;
+  password: string;
+  roles: InputJsonValue;
 };

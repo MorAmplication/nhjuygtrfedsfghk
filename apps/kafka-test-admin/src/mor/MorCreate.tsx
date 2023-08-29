@@ -4,27 +4,28 @@ import {
   Create,
   SimpleForm,
   CreateProps,
-  ReferenceArrayInput,
-  SelectArrayInput,
   TextInput,
+  PasswordInput,
+  SelectArrayInput,
 } from "react-admin";
 
-import { UserTitle } from "../user/UserTitle";
+import { ROLES_OPTIONS } from "../user/RolesOptions";
 
 export const MorCreate = (props: CreateProps): React.ReactElement => {
   return (
     <Create {...props}>
       <SimpleForm>
-        <ReferenceArrayInput
-          source="users"
-          reference="User"
-          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
-          format={(value: any) => value && value.map((v: any) => v.id)}
-        >
-          <SelectArrayInput optionText={UserTitle} />
-        </ReferenceArrayInput>
         <TextInput label="Name" source="name" />
         <TextInput label="test" source="test" />
+        <TextInput label="mmmm" source="mmmm" />
+        <TextInput label="Username" source="username" />
+        <PasswordInput label="Password" source="password" />
+        <SelectArrayInput
+          source="roles"
+          choices={ROLES_OPTIONS}
+          optionText="label"
+          optionValue="value"
+        />
       </SimpleForm>
     </Create>
   );

@@ -1,7 +1,10 @@
-import { UserUpdateManyWithoutMorsInput } from "./UserUpdateManyWithoutMorsInput";
+import { InputJsonValue } from "../../types";
 
 export type MorUpdateInput = {
-  users?: UserUpdateManyWithoutMorsInput;
   name?: string | null;
   test?: string | null;
+  mmmm?: string | null;
+  username?: string;
+  password?: string;
+  roles?: InputJsonValue;
 };

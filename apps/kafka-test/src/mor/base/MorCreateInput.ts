@@ -11,24 +11,13 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { UserCreateNestedManyWithoutMorsInput } from "./UserCreateNestedManyWithoutMorsInput";
-import { ValidateNested, IsOptional, IsString } from "class-validator";
-import { Type } from "class-transformer";
+import { IsString, IsOptional } from "class-validator";
+import { IsJSONValue } from "@app/custom-validators";
+import { GraphQLJSON } from "graphql-type-json";
+import { InputJsonValue } from "../../types";
 
 @InputType()
 class MorCreateInput {
-  @ApiProperty({
-    required: false,
-    type: () => UserCreateNestedManyWithoutMorsInput,
-  })
-  @ValidateNested()
-  @Type(() => UserCreateNestedManyWithoutMorsInput)
-  @IsOptional()
-  @Field(() => UserCreateNestedManyWithoutMorsInput, {
-    nullable: true,
-  })
-  users?: UserCreateNestedManyWithoutMorsInput;
-
   @ApiProperty({
     required: false,
     type: String,
@@ -50,6 +39,40 @@ class MorCreateInput {
     nullable: true,
   })
   test?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  mmmm?: string | null;
+
+  @ApiProperty({
+    required: true,
+    type: String,
+  })
+  @IsString()
+  @Field(() => String)
+  username!: string;
+
+  @ApiProperty({
+    required: true,
+    type: String,
+  })
+  @IsString()
+  @Field(() => String)
+  password!: string;
+
+  @ApiProperty({
+    required: true,
+  })
+  @IsJSONValue()
+  @Field(() => GraphQLJSON)
+  roles!: InputJsonValue;
 }
 
 export { MorCreateInput as MorCreateInput };
