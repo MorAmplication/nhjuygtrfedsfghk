@@ -18,6 +18,7 @@ export const MorCreate = (props: CreateProps): React.ReactElement => {
         <TextInput label="Name" source="name" />
         <TextInput label="test" source="test" />
         <TextInput label="mmmm" source="mmmm" />
+        <TextInput label="ffff" source="ffff" />
         <TextInput label="Username" source="username" />
         <PasswordInput label="Password" source="password" />
         <SelectArrayInput

@@ -61,6 +61,17 @@ class MorWhereInput {
     nullable: true,
   })
   mmmm?: StringNullableFilter;
+
+  @ApiProperty({
+    required: false,
+    type: StringNullableFilter,
+  })
+  @Type(() => StringNullableFilter)
+  @IsOptional()
+  @Field(() => StringNullableFilter, {
+    nullable: true,
+  })
+  ffff?: StringNullableFilter;
 }
 
 export { MorWhereInput as MorWhereInput };

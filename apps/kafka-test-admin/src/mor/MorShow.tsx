@@ -17,6 +17,7 @@ export const MorShow = (props: ShowProps): React.ReactElement => {
         <TextField label="Name" source="name" />
         <TextField label="test" source="test" />
         <TextField label="mmmm" source="mmmm" />
+        <TextField label="ffff" source="ffff" />
         <TextField label="Username" source="username" />
         <TextField label="Roles" source="roles" />
       </SimpleShowLayout>
